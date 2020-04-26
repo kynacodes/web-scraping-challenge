@@ -12,6 +12,11 @@ client = pymongo.MongoClient(conn)
 db = client.mars_scrapes
 scrapes = db.scrapes
 
+@app.route("/")
+def index():
+    mars_data = scrapes.find_one()
+    return render_template("index.html",mars_data=mars_data)
+
 @app.route("/scrape")
 def scrape():
     mars_dict = scrape_mars.scrape()
