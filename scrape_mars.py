@@ -69,23 +69,25 @@ def scrape():
     mars_dict['mars_weather'] = mars_weather
 
 
-    url = "https://space-facts.com/mars/"
-    browser.visit(url)
-    time.sleep(5)
+    #url = "https://space-facts.com/mars/"
+    #browser.visit(url)
+    #time.sleep(5)
 
-    html = browser.html
-    soup = bs(html, 'html.parser')
-    mars_facts_table = soup('table', id='tablepress-p-mars-no-2')[0]
+    
+    #html = browser.html
+    #soup = bs(html, 'html.parser')
+    #mars_facts_table = soup('table', id='tablepress-p-mars-no-2')[0]
 
-    mars_dict['mars_facts_table'] = mars_facts_table
+    #mars_dict['mars_facts_table'] = mars_facts_table
 
 
     mars_facts_dfs = pd.read_html('https://space-facts.com/mars/')
     mars_facts_df = mars_facts_dfs[0]
 
-    mars_dict['mars_facts_df'] = mars_facts_df
-
     mars_facts_df.set_index(0)
+    mars_facts_string = mars_facts_df.to_string()
+    
+    mars_dict['mars_facts'] = mars_facts_string
 
 
     # Navigate to initial page
@@ -116,6 +118,8 @@ def scrape():
         hemisphere_image_urls.append(link_dict) # Appends to dict
 
     mars_dict['hemisphere_image_urls'] = hemisphere_image_urls
+    
+    print(mars_dict)
 
     return mars_dict
 
